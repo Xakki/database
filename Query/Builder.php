@@ -14,6 +14,7 @@ use Illuminate\Database\Concerns\BuildsQueries;
 use Illuminate\Database\Concerns\ExplainsQueries;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Grammars\Grammar;
 use Illuminate\Database\Query\Processors\Processor;
@@ -2133,7 +2134,7 @@ class Builder implements BuilderContract
         // clause on the query. Then we'll increment the parameter index values.
         $bool = strtolower($connector);
 
-        $this->where(Str::snake($segment), '=', $parameters[$index], $bool);
+        $this->where(lcfirst(Model::$snakeAttributes ? Str::snake($segment) : $segment), '=', $parameters[$index], $bool);
     }
 
     /**
